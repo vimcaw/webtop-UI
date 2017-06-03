@@ -1,0 +1,135 @@
+body, ul, li{
+    margin: 0;
+    padding: 0;
+}
+
+/*一级菜单*/
+ul.menu{
+    margin-left: 20px;
+    background: #e6e6e6;
+}
+ul.menu>li{
+    position: relative;
+    display: inline-block;
+    padding: 5px 10px;
+    list-style-type: none;
+    cursor: default;
+}
+ul.menu li:hover{
+    background: #c6c6c6;
+}
+/*子菜单、右键菜单*/
+ul.menu li:hover>ul{
+    display: inline-block;
+}
+/*所有子菜单列表*/
+ul.menu ul{
+    display: none;
+    position: absolute;
+    padding: 2px;
+    list-style-type: none;
+    color: #2c2c2c;
+    background: #e6e6e6;
+    border: 1px solid #6a6a6a;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+}
+/*所有子菜单项*/
+ul.menu ul li, .context li{
+    position: relative;
+    padding: 2px 30px 2px 20px;
+    white-space: nowrap;
+}
+ul.menu ul li>div::after{
+    content: '';
+    position: absolute;
+    top: 0.5em;
+    right: 0px;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 0.3em solid transparent;
+    border-bottom: 0.3em solid transparent;
+    border-left: 0.6em solid #2c2c2c;
+}
+/*二级菜单*/
+ul.menu>li>ul{
+    left: 0;
+}
+/*三级以上菜单*/
+ul.menu ul ul, .context{
+    left: 100%;
+    top: 0;
+}
+
+/*窗口*/
+.window{
+    display: none;
+    position: absolute;
+    padding: 40px 10px 10px 10px;
+    z-index: 500;
+    background: #535353;
+    border: 1px solid #6a6a6a;
+}
+.window *{
+    margin: 5px;
+}
+
+.window .title-bar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    height: 30px;
+    background: #f3f3f3;
+    overflow: hidden;
+    cursor: default;
+}
+.window .title-bar>p{
+    position: absolute;
+    margin: 0;
+    padding-left: 15px;
+    line-height: 30px;
+}
+/*标题栏关闭按钮*/
+.window .title-bar .close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0 20px;
+    line-height: 30px;
+    transition: all .6s;
+}
+.window .title-bar .close::before{
+    content: '\2716';
+}
+.window .title-bar .close:hover{
+    background: #ff3e36;
+}
+
+/*面板*/
+.panel{
+    position: relative;
+    padding: 10px;
+    margin: 5px;
+    background: #535353;
+}
+.panel .title-bar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    height: 30px;
+    font-size: 12px;
+    background: #2c2c2c;
+    overflow: hidden;
+    cursor: default;
+}
+.panel .title-bar>p{
+    position: absolute;
+    margin: 0;
+    padding-left: 15px;
+    line-height: 30px;
+}
