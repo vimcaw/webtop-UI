@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <title>Demo for WebDesktop</title>
     <link rel="stylesheet" href="WebDesktop.css">
+    <style>
+        button{
+            margin: 10px;
+        }
+    </style>
 </head>
 <body>
-<div>
+<div class="demo-menu">
     <ul class="menu">
         <li>
             <div>file</div>
@@ -72,5 +77,24 @@
         </li>
     </ul>
 </div>
+
+<div class="demo-window">
+    <button id="display-window">Display window</button>
+    <div class="window" id="window-demo">
+        <p>This is a window</p>
+        <input type="text" id="new-title"><button id="rename-title">Rename title</button>
+    </div>
+</div>
+
+<script src="WebDesktop.js"></script>
+<script>
+    var windowDemo = windowUIList['window-demo'];
+    $('#display-window').onclick = function () {
+	    windowDemo.open();
+    };
+    windowDemo.find('#rename-title').onclick = function () {
+	    windowDemo.$title.innerText = windowDemo.find('#new-title').value;
+    };
+</script>
 </body>
 </html>

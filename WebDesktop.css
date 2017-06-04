@@ -3,6 +3,12 @@ body, ul, li{
     padding: 0;
 }
 
+.window{
+    position: relative;
+    box-shadow: 3px 3px 20px #000000;
+    z-index: 50;
+}
+
 /*一级菜单*/
 ul.menu{
     margin-left: 20px;
@@ -29,9 +35,9 @@ ul.menu ul{
     padding: 2px;
     list-style-type: none;
     color: #2c2c2c;
-    background: #e6e6e6;
-    border: 1px solid #6a6a6a;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+    background: #e6e6e6;        /*menu background*/
+    border: 1px solid #6a6a6a;      /*menu border*/
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);        /*menu shadow*/
 }
 /*所有子菜单项*/
 ul.menu ul li, .context li{
@@ -43,7 +49,7 @@ ul.menu ul li>div::after{
     content: '';
     position: absolute;
     top: 0.5em;
-    right: 0px;
+    right: 0;
     display: inline-block;
     width: 0;
     height: 0;
@@ -67,7 +73,7 @@ ul.menu ul ul, .context{
     position: absolute;
     padding: 40px 10px 10px 10px;
     z-index: 500;
-    background: #535353;
+    background: #f3f3f3;        /*窗口背景颜色*/
     border: 1px solid #6a6a6a;
 }
 .window *{
@@ -81,7 +87,7 @@ ul.menu ul ul, .context{
     margin: 0;
     width: 100%;
     height: 30px;
-    background: #f3f3f3;
+    background: #c6c6c6;        /*title-bar background*/
     overflow: hidden;
     cursor: default;
 }
@@ -107,29 +113,32 @@ ul.menu ul ul, .context{
 .window .title-bar .close:hover{
     background: #ff3e36;
 }
-
-/*面板*/
-.panel{
-    position: relative;
-    padding: 10px;
-    margin: 5px;
-    background: #535353;
-}
-.panel .title-bar{
+/*window-block*/
+.block-all{
     position: absolute;
     top: 0;
     left: 0;
-    margin: 0;
     width: 100%;
-    height: 30px;
-    font-size: 12px;
-    background: #2c2c2c;
-    overflow: hidden;
-    cursor: default;
+    z-index: 100;
+    background: #000;
+    opacity: 0.5;
 }
-.panel .title-bar>p{
-    position: absolute;
-    margin: 0;
-    padding-left: 15px;
-    line-height: 30px;
+.twinkle-border{
+    animation: .15s twinkleBorder;
+    animation-iteration-count: 6;
+}
+.twinkle-title{
+    animation: .15s twinkleTitle;
+    animation-iteration-count: 6;
+}
+@keyframes twinkleBorder {
+    from {
+        border-color: #ff3e3e;
+    }
+}
+
+@keyframes twinkleTitle {
+    from {
+        background-color: #ff2a24;
+    }
 }

@@ -32,8 +32,8 @@ var foreach = function (array, callback) {
  */
 function playAnimation($element, classBefore, classAfter) {
 	$element.className = classBefore;
-	window.requestAnimationFrame(function(time) {
-		window.requestAnimationFrame(function(time) {
+	window.requestAnimationFrame(function() {
+		window.requestAnimationFrame(function() {
 			$element.className = classAfter;
 		});
 	});
@@ -133,93 +133,9 @@ function listenRadioChange(radioName, callback) {
 
 /*---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------*/
+/*---------------------------------- Menu -----------------------------------*/
 /*---------------------------------------------------------------------------*/
-
-/**
- * windowUI组件构造函数，生成windowUI组件对象
- * @param $window {Element} 窗口容器元素
- * @constructor
- */
-function WindowUI ($window) {
-	this.$this = $window;
-	this.$elements = this.$this.children;
-	this.$titleBar = document.createElement('div');
-	this.$title = document.createElement('p');
-	
-	var $close = document.createElement('div');
-	this.$titleBar.className = 'title-bar';
-	this.$title.innerText = this.$this.id;
-	$close.className = 'close';
-	
-	var _this = this;
-	$close.onclick = function () {
-		_this.close();
-	};
-	
-	this.$titleBar.appendChild(this.$title);
-	this.$titleBar.appendChild($close);
-	this.$this.insertBefore(this.$titleBar, this.$this.firstChild);
-	
-	setDragMoving(this.$titleBar, this.$this);
-};
-
-WindowUI.prototype = {
-	constructor: WindowUI,
-	$block: (function () {
-		var $block = document.createElement('div');
-		$block.className = 'block-all';
-		$block.style.height = window.innerHeight + 'px';
-		$block.style.display = 'none';
-		document.body.appendChild($block);
-		return $block;
-	})(),
-	open: function () {
-		this.$this.style.display = 'block';
-		this.$block.style.display = 'block';
-		var _this = this;
-		this.$block.onclick = function () {
-			_this.twinkle();
-		};
-		this.setCenter();
-		var _this = this;
-		window.addEventListener('resize', function () {
-			_this.setCenter();
-		});
-	},
-	close: function () {
-		this.$this.style.display = 'none';
-		this.$block.style.display = 'none';
-		//修复类名，防止下次窗口刚出现就闪烁
-		this.$this.className = 'window';
-		this.$titleBar.className = 'title-bar';
-	},
-	find: function (selector) {
-		return this.$this.querySelector(selector);
-	},
-	setCenter: function () {
-		var left = (window.innerWidth - this.$this.offsetWidth) / 2;
-		var top = (window.innerHeight - this.$this.offsetHeight) / 2;
-		this.$this.style.left = left + 'px';
-		this.$this.style.top = top + 'px';
-	},
-	twinkle: function () {
-		playAnimation(this.$this, 'window', 'window twinkle-border');
-		playAnimation(this.$titleBar, 'title-bar', 'title-bar twinkle-title');
-	}
-};
-
-function registerWindow () {
-	var windowUIList = {};
-	var $windows = $('.window');
-	foreach($windows, function (item) {
-		windowUIList[item.id] = new WindowUI(item);
-	});
-	return windowUIList;
-};
-
-function panel($panel) {
-	this.$this = $panel;
-}
+/*---------------------------------------------------------------------------*/
 
 /**
  * 遍历所有子菜单并执行操作
@@ -265,4 +181,121 @@ function bindMenuClick ($menuUl, commandSet) {
 	});
 }
 
-var windowUIList = registerWindow();
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+/*--------------------------------- Window ----------------------------------*/
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+/**
+ * windowUI组件构造函数，生成windowUI组件对象
+ * @param $window {Element} 窗口容器元素
+ * @constructor
+ */
+function WindowUI ($window) {
+	this.$this = $window;   //窗口本身元素
+	this.$elements = this.$this.children;   //窗口子元素集合
+	this.$titleBar = document.createElement('div');     //标题栏
+	this.$title = document.createElement('p');      //标题文本
+	
+	this.$titleBar.className = 'title-bar';
+	this.$title.innerText = this.$this.id;
+	
+	//关闭按钮
+	var $close = document.createElement('div');
+	$close.className = 'close';
+	var _this = this;
+	$close.onclick = function () {
+		_this.close();
+	};
+	
+	//构建DOM
+	this.$titleBar.appendChild(this.$title);
+	this.$titleBar.appendChild($close);
+	this.$this.insertBefore(this.$titleBar, this.$this.firstChild);
+	
+	//给窗口标题栏添加拖拽移动功能
+	setDragMoving(this.$titleBar, this.$this);
+}
+
+WindowUI.prototype = {
+	constructor: WindowUI,
+	//窗口打开时，非窗口区域的覆盖块，用来屏蔽非窗口区域的交互
+	$block: (function () {
+		var $block = document.createElement('div');
+		$block.className = 'block-all';
+		$block.style.height = window.innerHeight + 'px';
+		$block.style.display = 'none';
+		document.body.appendChild($block);
+		return $block;
+	})(),
+	/**
+	 * 打开这个窗口
+	 * @param isCenter {Boolean} 打开时窗口是否居中（默认true)
+	 */
+	open: function (isCenter) {
+		this.$this.style.display = 'block';
+		this.$block.style.display = 'block';
+		var _this = this;
+		
+		//点击非窗口区域时，闪烁窗口
+		this.$block.onclick = function () {
+			_this.twinkle();
+		};
+		
+		if (isCenter === undefined || isCenter === true) {
+			//让窗口居中
+			this.setCenter();
+		}
+	},
+	/**
+	 * 关闭这个窗口
+	 */
+	close: function () {
+		this.$this.style.display = 'none';
+		this.$block.style.display = 'none';
+		//修复类名，防止下次窗口刚出现就闪烁
+		this.$this.className = 'window';
+		this.$titleBar.className = 'title-bar';
+	},
+	/**
+	 * 查找窗口中的元素
+	 * @param selector {String} 要查找元素的css选择器
+	 * @returns {Element} 找到的元素
+	 */
+	find: function (selector) {
+		return this.$this.querySelector(selector);
+	},
+	/**
+	 * 让这个窗口居中
+	 */
+	setCenter: function () {
+		var left = (window.innerWidth - this.$this.offsetWidth) / 2;
+		var top = (window.innerHeight - this.$this.offsetHeight) / 2;
+		this.$this.style.left = left + 'px';
+		this.$this.style.top = top + 'px';
+	},
+	/**
+	 * 闪烁窗口的标题栏和边框
+	 */
+	twinkle: function () {
+		playAnimation(this.$this, 'window', 'window twinkle-border');
+		playAnimation(this.$titleBar, 'title-bar', 'title-bar twinkle-title');
+	}
+};
+
+/**
+ * 获取所有窗口组件
+ * @returns {{}} WindowUI对象列表
+ */
+function getAllWindowUI () {
+	var windowUIList = {};
+	var $windows = $('.window');
+	foreach($windows, function (item) {
+		windowUIList[item.id] = new WindowUI(item);
+	});
+	return windowUIList;
+};
+
+var windowUIList = getAllWindowUI();
+
