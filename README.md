@@ -4,9 +4,9 @@ WebDesktop is a web UI component library, it provides some UI components for des
 
 Home: https://neoherus.github.io/WebDesktop/
 
-Demo: https://neoherus.github.io/WebDesktop/demo.html
+Demo: https://neoherus.github.io/WebDesktop/demo/demo.html
 
-Document: https://neoherus.github.io/WebDesktop/document.html
+Document: https://neoherus.github.io/WebDesktop/document/document.html
 
 # Feature
 1. Easy to use
