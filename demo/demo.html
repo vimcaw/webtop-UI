@@ -3,28 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Demo for WebDesktop</title>
-    <link rel="stylesheet" href="WebDesktop.css">
+    <link rel="stylesheet" href="../WebDesktop.css">
     <style>
+        body{
+            width: 60%;
+            margin: auto;
+        }
+        body>div{
+            margin: 20px;
+        }
         button{
             margin: 10px;
         }
     </style>
 </head>
 <body>
-<div class="demo-menu">
+<div id="demo-menu">
     <ul class="menu">
         <li>
-            <div>file</div>
+            <span>file</span>
             <ul>
                 <li>New</li>
                 <li>Open</li>
                 <li>
-                    <div>Save as</div>
+                    <span>Save as</span>
                     <ul>
                         <li>jpg</li>
                         <li>png</li>
                         <li>
-                            <div>web</div>
+                            <span>web</span>
                             <ul>
                                 <li>gif</li>
                                 <li>webp</li>
@@ -35,7 +42,7 @@
             </ul>
         </li>
         <li>
-            <div>edit</div>
+            <span>edit</span>
             <ul>
                 <li>Undo</li>
                 <li>Redo</li>
@@ -46,7 +53,7 @@
             </ul>
         </li>
         <li>
-            <div>view</div>
+            <span>view</span>
             <ul>
                 <li>Zoom</li>
                 <li>Night</li>
@@ -54,12 +61,12 @@
             </ul>
         </li>
         <li>
-            <div>Tool</div>
+            <span>Tool</span>
             <ul>
                 <li>Analyze</li>
                 <li>Add Space</li>
                 <li>
-                    <div>Settings</div>
+                    <span>Settings</span>
                     <ul>
                         <li>General</li>
                         <li>Performance</li>
@@ -69,7 +76,7 @@
             </ul>
         </li>
         <li>
-            <div>help</div>
+            <span>help</span>
             <ul>
                 <li>help</li>
                 <li>about</li>
@@ -86,10 +93,75 @@
     </div>
 </div>
 
-<script src="WebDesktop.js"></script>
+<div class="tab" id="demo-tab">
+    <ul>
+        <li>demo1</li>
+        <li>demo2</li>
+        <li>demo3</li>
+    </ul>
+    <div class="tab-content">
+        <div>
+            <h1>demo1</h1>
+            <p>this is a tab demo.</p>
+            <p>AAAAAAAAAAAAAAA</p>
+            <p>AAAAAAAAAAAAAAA</p>
+            <p>AAAAAAAAAAAAAAA</p>
+            <p>AAAAAAAAAAAAAAA</p>
+            <p>AAAAAAAAAAAAAAA</p>
+        </div>
+        <div>
+            <h1>demo2</h1>
+            <p>this is a tab demo.</p>
+            <p>BBBBBBBBBBBBBBBBBB</p>
+        </div>
+        <div>
+            <h1>demo3</h1>
+            <p>this is a tab demo.</p>
+            <p>CCCCCCCCCCCCCCCCCCC</p>
+            <p>CCCCCCCCCCCCCCCCCCC</p>
+            <p>CCCCCCCCCCCCCCCCCCC</p>
+        </div>
+    </div>
+</div>
+
+<div id="demo-tree"></div>
+
+<div>
+    <p>This is a demo.</p>
+</div>
+
+<script src="../WebDesktop.js"></script>
 <script>
+	var windowUIList = getAllWindowUI();
+	var treeData = [
+        {
+        	label: 'C:/',
+            children: [
+            	'Program Files',
+                {
+                    label: 'Windows',
+	                children: [
+                        'System',
+                        'System32',
+                        'Fonts'
+                    ]
+                }
+            ]
+        },
+        {
+            label: 'D:/',
+	        children: [
+                'wqswqdwq',
+                'sadasdasd',
+                'adascxzcxz'
+            ]
+        }
+    ];
+	new Tab('demo-tab');
+	var tree = new Tree(treeData);
+	tree.render($('#demo-tree')[0]);
     var windowDemo = windowUIList['window-demo'];
-    $('#display-window').onclick = function () {
+    $('#display-window')[0].onclick = function () {
 	    windowDemo.open();
     };
     windowDemo.find('#rename-title').onclick = function () {

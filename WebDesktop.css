@@ -1,18 +1,33 @@
 body, ul, li{
     margin: 0;
     padding: 0;
+    background: #fff;
 }
 
-.window{
-    position: relative;
-    box-shadow: 3px 3px 20px #000000;
-    z-index: 50;
+/*通用主题*/
+
+/*UI组件背景*/
+ul.menu ul, .window, .tab>div>div{
+    background: #fff;
+    color: #2c2c2c;
+}
+/*UI导航栏背景*/
+ul.menu, ul.menu>li, .tab>ul, .tab>ul>li{
+    background: #f6f6f6;
+}
+    /*UI组件背景 hover 或 checked 状态*/
+ul.menu li:hover, .window .title-bar, .tab>ul>li.checked{
+    background: #dbdbdb;
+}
+/*UI组件边框*/
+ul.menu, ul.menu ul, .window, .tab, .tree{
+    border: 1px solid #c3c3c3;
 }
 
 /*一级菜单*/
 ul.menu{
-    margin-left: 20px;
-    background: #e6e6e6;
+    position: relative;
+    z-index: 100;
 }
 ul.menu>li{
     position: relative;
@@ -20,9 +35,6 @@ ul.menu>li{
     padding: 5px 10px;
     list-style-type: none;
     cursor: default;
-}
-ul.menu li:hover{
-    background: #c6c6c6;
 }
 /*子菜单、右键菜单*/
 ul.menu li:hover>ul{
@@ -32,12 +44,11 @@ ul.menu li:hover>ul{
 ul.menu ul{
     display: none;
     position: absolute;
+    top: 1.5em;     /*fix ie display*/
     padding: 2px;
     list-style-type: none;
-    color: #2c2c2c;
-    background: #e6e6e6;        /*menu background*/
-    border: 1px solid #6a6a6a;      /*menu border*/
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);        /*menu shadow*/
+    z-index: 100;
 }
 /*所有子菜单项*/
 ul.menu ul li, .context li{
@@ -45,7 +56,7 @@ ul.menu ul li, .context li{
     padding: 2px 30px 2px 20px;
     white-space: nowrap;
 }
-ul.menu ul li>div::after{
+ul.menu ul li>span::after{
     content: '';
     position: absolute;
     top: 0.5em;
@@ -73,8 +84,7 @@ ul.menu ul ul, .context{
     position: absolute;
     padding: 40px 10px 10px 10px;
     z-index: 500;
-    background: #f3f3f3;        /*窗口背景颜色*/
-    border: 1px solid #6a6a6a;
+    box-shadow: 3px 3px 20px #000000;
 }
 .window *{
     margin: 5px;
@@ -87,7 +97,6 @@ ul.menu ul ul, .context{
     margin: 0;
     width: 100%;
     height: 30px;
-    background: #c6c6c6;        /*title-bar background*/
     overflow: hidden;
     cursor: default;
 }
@@ -119,7 +128,9 @@ ul.menu ul ul, .context{
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 100;
+    height: 100vh;
+    margin: 0;
+    z-index: 400;
     background: #000;
     opacity: 0.5;
 }
@@ -141,4 +152,82 @@ ul.menu ul ul, .context{
     from {
         background-color: #ff2a24;
     }
+}
+
+/*选项卡*/
+.tab>ul{
+    position: relative;
+    cursor: default;
+    border-bottom: 1px solid #c3c3c3;
+}
+.tab>ul>li{
+    display: inline-block;
+    position: relative;
+    padding: 10px;
+}
+.tab>ul>li.checked{
+    background: #fff;
+    border-left: 1px solid #c3c3c3;
+    border-right: 1px solid #c3c3c3;
+}
+.tab>ul>li.checked:first-child{
+    border-left: none;      /*去除第一个 li 元素的重复边框*/
+}
+.tab>ul>li.checked::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 2px;
+    background: #fff;
+}
+.tab>div.tab-content>div{
+    display: none;
+    padding: 20px;
+}
+.tab>div.tab-content>div.checked{
+    display: block;
+}
+
+/*树形组件*/
+ul.tree{
+    padding: 10px;
+    list-style-type: none;
+    cursor: default;
+}
+ul.tree ul{
+    padding-left: 15px;
+    list-style-type: none;
+}
+ul.tree span{
+    display: block;
+    padding: 0.3em 1.5em;
+}
+ul.tree span.folder::before{
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: -1em;
+    margin-right: 0.4em;
+    border-left: 0.6em solid #2c2c2c;
+    border-top: 0.3em solid transparent;
+    border-bottom: 0.3em solid transparent;
+    transition: .2s;
+}
+ul.tree span:hover, ul.tree li.tree-item:hover, span.checked{
+    background: #dbdbdb;
+}
+ul.tree>li ul{
+    height: 0;
+    visibility: hidden;
+    overflow: hidden;
+}
+ul.tree>li span.expanded+ul{
+    height: auto;
+    visibility: visible;
+}
+ul.tree>li span.expanded::before{
+    transform: rotate(90deg);
 }

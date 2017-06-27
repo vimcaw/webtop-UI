@@ -1,0 +1,30 @@
+a, a:visited{
+    color: #000;
+    text-decoration: none;
+}
+h1{
+    color: #2d306d;
+    border-bottom: 4px solid #2d306d;
+}
+body{
+    width: 80%;
+    margin: 0 auto;
+    background: #e6e6e6;
+}
+.content{
+    width: 70%;
+}
+.nav{
+    width: 25%;
+    float: right;
+}
+.nav a:hover{
+    color: #3b4a7d;
+}
+.nav h2{
+    color: #3b4a7d;
+}
+.nav ul{
+    list-style-type: none;
+    font-size: 1.2em;
+}

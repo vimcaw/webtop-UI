@@ -6,21 +6,48 @@
  * @returns {*} {Node/NodeList} 若为id选择器，返回单个元素，否则返回NodeList
  */
 var $ = function (selector) {
-	if (selector.charAt(0) === '#') {
-		return document.querySelector(selector);
-	} else {
-		return document.querySelectorAll(selector);
-	}
+	return document.querySelectorAll(selector);
 };
 
 /**
  * 遍历数组或类数组并对每项进行操作
- * @param array {Array/Array-like} 要遍历的数组
+ * @param array {Array} 要遍历的数组
  * @param callback {Function} 对每项进行处理的函数
  */
 var foreach = function (array, callback) {
 	for (var i = 0,item; item = array[i++];) {
-		callback(item);
+		callback(item, i - 1);
+	}
+};
+
+/**
+ * 给某个元素添加类名
+ * @param className {string} 要添加的类名
+ */
+Element.prototype.addClass= function (className) {
+	if (this.className === '') {
+		this.className = className;
+	} else {
+		this.className += ' ' + className;
+	}
+};
+
+/**
+ * 移除元素的某个类名
+ * @param className {string} 要移除的类名
+ * @returns {boolean} 如果找不到该类名则返回 false，成功移除返回 true
+ */
+Element.prototype.removeClass = function (className) {
+	var regExpMatch = new RegExp('^' + className + '$|^'
+		+ className + ' +| +'
+		+ className + '$| +'
+		+ className + ' +');
+	
+	if (this.className.match(regExpMatch)) {        //找到符合的类名
+		this.className = this.className.replace(regExpMatch, '');
+		return true;
+	} else {        //找不到该类名
+		return false;
 	}
 };
 
@@ -221,32 +248,35 @@ function WindowUI ($window) {
 WindowUI.prototype = {
 	constructor: WindowUI,
 	//窗口打开时，非窗口区域的覆盖块，用来屏蔽非窗口区域的交互
-	$block: (function () {
-		var $block = document.createElement('div');
-		$block.className = 'block-all';
-		$block.style.height = window.innerHeight + 'px';
-		$block.style.display = 'none';
-		document.body.appendChild($block);
-		return $block;
-	})(),
+	$block: null,
 	/**
 	 * 打开这个窗口
 	 * @param isCenter {Boolean} 打开时窗口是否居中（默认true)
 	 */
 	open: function (isCenter) {
 		this.$this.style.display = 'block';
-		this.$block.style.display = 'block';
+		
+		if (WindowUI.prototype.$block) {
+			this.$block.style.display = 'block';
+		} else {
+			var $block = document.createElement('div');
+			$block.className = 'block-all';
+			document.body.appendChild($block);
+			WindowUI.prototype.$block = $block;
+		}
+		
 		var _this = this;
+		
+		if (isCenter === undefined || isCenter === true) {
+			//让窗口居中
+			this.setCenter();
+		}
 		
 		//点击非窗口区域时，闪烁窗口
 		this.$block.onclick = function () {
 			_this.twinkle();
 		};
 		
-		if (isCenter === undefined || isCenter === true) {
-			//让窗口居中
-			this.setCenter();
-		}
 	},
 	/**
 	 * 关闭这个窗口
@@ -297,5 +327,133 @@ function getAllWindowUI () {
 	return windowUIList;
 };
 
-var windowUIList = getAllWindowUI();
+
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+/*--------------------------------- Tab ----------------------------------*/
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+function Tab (tabId) {
+	var $tab = document.getElementById(tabId);
+	this.$tabList = $tab.querySelectorAll('ul>li');
+	this.$tabContentList = $tab.querySelectorAll('.tab-content>div');
+	this.currentId = 0;
+	
+	if (this.$tabList.length !== 0) {
+		this.switchTab(this.currentId);
+		var _this = this;
+		foreach(this.$tabList, function (item, index) {
+			item.onclick = function () {
+				_this.switchTab(index);
+			}
+		});
+	}
+}
+
+Tab.prototype = {
+	constructor: Tab,
+	switchTab: function (id) {
+		this.$tabList[this.currentId].removeClass('checked');
+		this.$tabContentList[this.currentId].removeClass('checked');
+		this.currentId = id;
+		this.$tabList[this.currentId].addClass('checked');
+		this.$tabContentList[this.currentId].addClass('checked');
+	}
+}
+
+function getAllTab() {
+	var $tabUIList = $('.tab');
+	var tabUIList = [];
+	
+	$tabUIList && foreach($tabUIList, function (item) {
+		tabUIList.push(new Tab(item));
+	});
+	
+	return tabUIList;
+}
+
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+/*--------------------------------- Tree ------------------------------------*/
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+// data 格式：
+// data = [
+// 	'demo.txt',     //item
+// 	'a',        //item
+//  //folder:
+// 	{
+// 		label: 'folder',
+// 		children: [
+// 			'a.mp4',
+// 			'b',
+// 			{
+// 				//folder
+// 				label: 'c',
+// 				[
+// 					'c0001',
+// 					'c0002',
+// 					'c0003'
+// 				]
+// 			}
+// 		]
+// 	}
+// ]
+
+function Tree(data) {
+	
+	this.$tree = this.createTree(data);
+	this.$tree.className = 'tree';
+	this.$value = null;
+}
+
+Tree.prototype = {
+	constructor: Tree,
+	createItem: function (item) {
+		var $li = document.createElement('li'),
+			$span = document.createElement('span'),
+			_this = this;
+		
+		$span.innerText = item;
+		$span.onclick = function() {
+			_this.check(this);
+		};
+		$li.appendChild($span);
+		return $li;
+	},
+	createTree: function (data) {
+		var $ul = document.createElement('ul'),
+			_this = this;
+		foreach(data, function (item) {
+			if (item.label) {
+				var $li = document.createElement('li'),
+					$span = document.createElement('span');
+				$span.className = 'folder';
+				$span.innerText = item.label;
+				$span.onclick = function() {
+					this.removeClass('expanded') || this.addClass('expanded');
+				};
+				$li.appendChild($span);
+				$li.appendChild(_this.createTree(item.children));
+				$ul.appendChild($li);
+			} else {
+				$ul.appendChild(_this.createItem(item));
+			}
+		});
+		return $ul;
+	},
+	check: function ($item) {
+		this.$value && this.$value.removeClass('checked');
+		this.$value = $item;
+		this.$value.addClass('checked');
+	},
+	render: function ($target) {
+		$target = $target || document.body;
+		$target.appendChild(this.$tree);
+	}
+};
+
+/*---------------------------------------------------------------------------*/
 

@@ -15,11 +15,19 @@ Document: https://neoherus.github.io/WebDesktop/document.html
 
 2. multilevel menu
 
-![menu](demo_image/menu.png)
+![menu](image/menu.png)
 
-3. window component
+3. window
 
-![window](demo_image/windowpng.png)
+![window](image/window.png)
+
+4. tab
+
+![tab](image/tab.png)
+
+5.tree
+
+![tree](image/tree.png)
 
 # done
 * 2017-6-2 multilevel menu component
