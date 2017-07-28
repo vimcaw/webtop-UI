@@ -4,32 +4,281 @@
     <meta charset="UTF-8">
     <title>WebDesktop Document</title>
     <link rel="stylesheet" href="../WebDesktop.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!--<link rel="stylesheet" href="style.css">-->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
 </head>
 <body>
+    <div class="nav">
+        <h2>目录</h2>
+        <ul>
+            <li><a href="#usage">用法</a></li>
+            <li><a href="#menu">菜单</a></li>
+            <li><a href="#window">窗口</a></li>
+            <li><a href="#tab">选项卡</a></li>
+            <li><a href="#tree">树形组件</a></li>
+        </ul>
+    </div>
     <div class="content">
         <h1 id="usage">用法</h1>
         <pre>
             <code>&lt;link rel="stylesheet" href="WebDesktop.css"></code>
             <code>&lt;script src="WebDesktop.js"></script></code>
         </pre>
-        <h1 id="menu">Menu</h1>
-        <p>使用一个 ul 列表，并将其 <code>class="menu"</code> 即可使其成为一个菜单，菜单的内容为 ul 下的 li 元素内容，支持嵌套使用</p>
-        <h2>例子</h2>
-        <pre><code></code></pre>
 
-    </div>
-    <div class="nav">
-        <h2>Navigation</h2>
-        <ul>
-            <li><a href="#usage">Usage</a></li>
-            <li><a href="#menu">menu</a></li>
-            <li><a href="#window">window</a></li>
-        </ul>
+        <h1 id="menu">菜单</h1>
+        <p>使用一个 ul 列表，并将其  <code>class="menu"</code></pre> 即可使其成为一个菜单，菜单的内容为 <code>ul</code> 下的 <code>li</code> 元素内容，支持嵌套使用</p>
+        <div class="demo">
+            <p>实例：</p>
+            <div class="display">
+                <ul class="menu">
+                    <li>
+                        <span>file</span>
+                        <ul>
+                            <li>New</li>
+                            <li>Open</li>
+                            <li>
+                                <span>Save as</span>
+                                <ul>
+                                    <li>jpg</li>
+                                    <li>png</li>
+                                    <li>
+                                        <span>web</span>
+                                        <ul>
+                                            <li>gif</li>
+                                            <li>webp</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span>edit</span>
+                        <ul>
+                            <li>Undo</li>
+                            <li>Redo</li>
+                            <li>Cut</li>
+                            <hr>
+                            <li>Copy</li>
+                            <li>Paste</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span>view</span>
+                        <ul>
+                            <li>Zoom</li>
+                            <li>Night</li>
+                            <li>Default</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span>Tool</span>
+                        <ul>
+                            <li>Analyze</li>
+                            <li>Add Space</li>
+                            <li>
+                                <span>Settings</span>
+                                <ul>
+                                    <li>General</li>
+                                    <li>Performance</li>
+                                    <li>Style</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span>help</span>
+                        <ul>
+                            <li>help</li>
+                            <li>about</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="code-html">
+                <pre><code>//code</code></pre>
+            </div>
+        </div>
+
+        <h1 id="window">窗口</h1>
+        <div class="demo">
+            <p>实例：</p>
+            <div class="display">
+                <button id="display-window">Display window</button>
+                <div class="window" id="window-demo">
+                    <p>This is a window</p>
+                    <input type="text" id="new-title"><button id="rename-title">Rename title</button>
+                </div>
+            </div>
+            <div class="code-html">
+                <pre><code>
+                    //code
+                </code></pre>
+            </div>
+            <div class="code-javascript">
+                <pre><code>        var windowDemo = windowUIList['window-demo'];
+        $('#display-window')[0].onclick = function () {
+            windowDemo.open();
+        };
+        windowDemo.find('#rename-title').onclick = function () {
+            windowDemo.$title.innerText = windowDemo.find('#new-title').value;
+        };</code></pre>
+            </div>
+        </div>
+
+        <h1 id="tab">选项卡</h1>
+        <div class="demo">
+            <p>实例：</p>
+            <div class="display">
+                <div class="tab" id="demo-tab">
+                    <ul>
+                        <li>demo1</li>
+                        <li>demo2</li>
+                        <li>demo3</li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div>
+                            <h1>demo1</h1>
+                            <p>this is a tab demo.</p>
+                            <p>AAAAAAAAAAAAAAA</p>
+                            <p>AAAAAAAAAAAAAAA</p>
+                            <p>AAAAAAAAAAAAAAA</p>
+                            <p>AAAAAAAAAAAAAAA</p>
+                            <p>AAAAAAAAAAAAAAA</p>
+                        </div>
+                        <div>
+                            <h1>demo2</h1>
+                            <p>this is a tab demo.</p>
+                            <p>BBBBBBBBBBBBBBBBBB</p>
+                        </div>
+                        <div>
+                            <h1>demo3</h1>
+                            <p>this is a tab demo.</p>
+                            <p>CCCCCCCCCCCCCCCCCCC</p>
+                            <p>CCCCCCCCCCCCCCCCCCC</p>
+                            <p>CCCCCCCCCCCCCCCCCCC</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code-html">
+                <pre><code>
+                    //code
+                </code></pre>
+            </div>
+        </div>
+        <h1 id="tree">树形组件</h1>
+        <p>用嵌套的数组表示出树形组件的数据，以树形组件的数据为参数新建一个树形组件，再将其渲染到某个元素上即可</p>
+        <div class="demo">
+            <p>实例：</p>
+            <div class="display">
+                <div class="display-value">
+                    <p>选择的项：</p>
+                    <span>未选择</span>
+                </div>
+                <div id="demo-tree"></div>
+            </div>
+            <div class="code-html">
+                <pre><code>
+                //code
+                </code></pre>
+            </div>
+            <div class="code-javascript">
+                <pre><code>
+        var treeData = [
+            {
+                label: 'C:/',
+                children: [
+                    'Program Files',
+                    {
+                        label: 'Windows',
+                        children: [
+                            'System',
+                            'System32',
+                            'Fonts'
+                        ]
+                    }
+                ]
+            },
+            {
+                label: 'D:/',
+                children: [
+                    'wqswqdwq',
+                    'sadasdasd',
+                    'adascxzcxz'
+                ]
+            }
+        ];
+
+        var tree = new Tree(treeData);
+        tree.render($('#demo-tree')[0]);
+        tree.onchange = function () {
+            $('.display-value span')[0].innerText = this.$value.innerText;
+        };
+                </code></pre>
+            </div>
+        </div>
     </div>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../WebDesktop.js"></script>
+    <script>
+        var demos = $('.demo');
+        foreach(demos, function (item) {
+            item.querySelector('.code-html code').innerText = item.querySelector('.display').innerHTML;
+        });
+
+        foreach($('.code-html'), function (item) {
+            item.innerHTML = '<p>HTML</p>' + item.innerHTML;
+        });
+
+        foreach($('.code-javascript'), function (item) {
+            item.innerHTML = '<p>JavaScript</p>' + item.innerHTML;
+        });
+
+        var windowUIList = getAllWindowUI();
+        var windowDemo = windowUIList['window-demo'];
+        $('#display-window')[0].onclick = function () {
+            windowDemo.open();
+        };
+        windowDemo.find('#rename-title').onclick = function () {
+            windowDemo.$title.innerText = windowDemo.find('#new-title').value;
+        };
+
+        new Tab('demo-tab');
+
+        var treeData = [
+            {
+                label: 'C:/',
+                children: [
+                    'Program Files',
+                    {
+                        label: 'Windows',
+                        children: [
+                            'System',
+                            'System32',
+                            'Fonts'
+                        ]
+                    }
+                ]
+            },
+            {
+                label: 'D:/',
+                children: [
+                    'wqswqdwq',
+                    'sadasdasd',
+                    'adascxzcxz'
+                ]
+            }
+        ];
+
+        var tree = new Tree(treeData);
+        tree.render($('#demo-tree')[0]);
+        tree.onchange = function () {
+            $('.display-value span')[0].innerText = this.$value.innerText;
+        };
+    </script>
 </body>
 </html>
