@@ -6,7 +6,7 @@ Home: https://neoherus.github.io/WebDesktop/
 
 Demo: https://neoherus.github.io/WebDesktop/demo/demo.html
 
-Document: https://neoherus.github.io/WebDesktop/document/document.html
+Document: https://neoherus.github.io/WebDesktop/document/document_zh-cn.html
 
 # Feature
 1. Easy to use
