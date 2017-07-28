@@ -167,7 +167,7 @@ function listenRadioChange(radioName, callback) {
 /**
  * 遍历所有子菜单并执行操作
  * @param $ul {HTMLUIListElement} 菜单ul容器元素
- * @param callback {Function} 对每个子菜单执行操作回调函数，传递该子菜单元素作为回调参数
+ * @param callback {Function} 对每个子菜单执行操作的回调函数，传递该子菜单元素作为回调参数
  */
 function foreachMenu ($ul, callback) {
 	var $uls = $ul.children;
@@ -224,10 +224,10 @@ function WindowUI ($window) {
 	this.$elements = this.$this.children;   //窗口子元素集合
 	this.$titleBar = document.createElement('div');     //标题栏
 	this.$title = document.createElement('p');      //标题文本
-	
+
 	this.$titleBar.className = 'title-bar';
 	this.$title.innerText = this.$this.id;
-	
+
 	//关闭按钮
 	var $close = document.createElement('div');
 	$close.className = 'close';
@@ -235,12 +235,12 @@ function WindowUI ($window) {
 	$close.onclick = function () {
 		_this.close();
 	};
-	
+
 	//构建DOM
 	this.$titleBar.appendChild(this.$title);
 	this.$titleBar.appendChild($close);
 	this.$this.insertBefore(this.$titleBar, this.$this.firstChild);
-	
+
 	//给窗口标题栏添加拖拽移动功能
 	setDragMoving(this.$titleBar, this.$this);
 }
@@ -255,7 +255,7 @@ WindowUI.prototype = {
 	 */
 	open: function (isCenter) {
 		this.$this.style.display = 'block';
-		
+
 		if (WindowUI.prototype.$block) {
 			this.$block.style.display = 'block';
 		} else {
@@ -399,11 +399,12 @@ function getAllTab() {
 // 				]
 // 			}
 // 		]
-// 	}
-// ]
+// 	},
+//  'd0001',
+//  'd0002'
+// ];
 
 function Tree(data) {
-	
 	this.$tree = this.createTree(data);
 	this.$tree.className = 'tree';
 	this.$value = null;
@@ -444,11 +445,26 @@ Tree.prototype = {
 		});
 		return $ul;
 	},
+    /**
+	 * 选中元素更改事件
+     */
+	onchange: function () {
+
+    },
+	/**
+	 * 选中某项
+	 * @param $item {Element} 要选中的元素
+	 */
 	check: function ($item) {
 		this.$value && this.$value.removeClass('checked');
 		this.$value = $item;
 		this.$value.addClass('checked');
+		this.onchange();
 	},
+	/**
+	 * 渲染树形组件到某个元素下面
+	 * @param $target {Element} 要存放树形组件的父节点，若没有指定则存放到body元素下
+	 */
 	render: function ($target) {
 		$target = $target || document.body;
 		$target.appendChild(this.$tree);

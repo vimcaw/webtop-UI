@@ -81,7 +81,7 @@ ul.menu ul ul, .context{
 /*窗口*/
 .window{
     display: none;
-    position: absolute;
+    position: fixed;
     padding: 40px 10px 10px 10px;
     z-index: 500;
     box-shadow: 3px 3px 20px #000000;
@@ -124,7 +124,7 @@ ul.menu ul ul, .context{
 }
 /*window-block*/
 .block-all{
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
