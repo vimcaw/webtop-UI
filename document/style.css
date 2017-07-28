@@ -1,22 +1,32 @@
+body{
+    width: 70%;
+    margin: 10px auto;
+    background: #fff;
+    color: #3a3a3a;
+}
 a, a:visited{
     color: #000;
     text-decoration: none;
 }
 h1{
     color: #2d306d;
-    border-bottom: 4px solid #2d306d;
 }
-body{
-    width: 80%;
-    margin: 0 auto;
-    background: #e6e6e6;
+
+code{
+    background: #282C34;
+    color: #d8dc76;
+    padding: 0.2em 10px;
+    font-size: 0.8em;
+    border-radius: 3px;
 }
+
 .content{
     width: 70%;
 }
 .nav{
-    width: 25%;
-    float: right;
+    position: fixed;
+    right: 25%;
+    padding: 20px;
 }
 .nav a:hover{
     color: #3b4a7d;
@@ -27,4 +37,41 @@ body{
 .nav ul{
     list-style-type: none;
     font-size: 1.2em;
+}
+.line{
+    display: inline-block;
+    /*font-family: Menlo, 'Source Code Pro', Consolas;*/
+}
+.demo{
+    border-radius: 5px;
+    border: 1px solid #cdcdcd;
+}
+.demo p, .demo .display{
+    margin: 20px;
+}
+.demo .display{
+    min-height: 100px;
+    margin-bottom: 20px;
+}
+.demo pre{
+    margin: 0;
+}
+.demo code{
+    border-radius: 0 0 5px 5px;
+}
+
+#demo-tree{
+    margin-right: 220px;
+}
+.display-value{
+    float: right;
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid #c3c3c3;
+    text-align: center;
+}
+.display-value span, .display-value p{
+    display: block;
+    margin: 15px;
+    line-height: 1em;
 }
