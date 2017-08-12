@@ -29,10 +29,12 @@ Document: https://vimcaw.github.io/WebDesktop/document/document_zh-cn.html
 
 ![tree](image/tree.png)
 
-# done
-* 2017-6-2 multilevel menu component
-* 2017-6-4 window component
+# Updates
 
-# Unfinished
-* tab component
-* tree component
+* 2017-7-28 onchange function (change event recall) for tree component.
+* 2017-6-4 tab & tree component.
+* 2017-6-2 multilevel menu component.
+* 2017-6-4 window component.
+
+# License
+MIT
