@@ -1,6 +1,5 @@
-
-# WebDesktop
-WebDesktop is a web UI component library, it provides some UI components for desktop applications, such as multilevel menu, windows, context menu, tree components, tabs.
+# Webtop-UI
+Webtop UI is a lightweight web UI framework, it provides some UI components for desktop applications, such as multilevel menu, windows, context menu, tree components, tabs.
 
 Home: https://vimcaw.github.io/WebDesktop/
 
