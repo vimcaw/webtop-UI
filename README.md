@@ -1,11 +1,11 @@
 # Webtop-UI
 Webtop UI is a lightweight web UI framework, it provides some UI components for desktop applications, such as multilevel menu, windows, context menu, tree components, tabs.
 
-Home: https://vimcaw.github.io/Webtop-UI/
+Home: https://vimcaw.github.io/webtop-UI/
 
-Demo: https://vimcaw.github.io/Webtop-UI/demo/demo.html
+Demo: https://vimcaw.github.io/webtop-UI/demo/demo.html
 
-Document: https://vimcaw.github.io/Webtop-UI/document/document_zh-cn.html
+Document: https://vimcaw.github.io/webtop-UI/document/document_zh-cn.html
 
 # Feature
 1. Easy to use
